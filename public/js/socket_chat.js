@@ -16,7 +16,7 @@ socket.on('connect', function() {
         name: usuario.name,
         room: usuario.room
     }, function(resp) {
-        console.log(resp);
+        render_people(resp);
     })
 })
 socket.on('send_message', function(message) {
