@@ -20,12 +20,14 @@ io.on('connection', (client) => {
          * con el getPeopleByRoom solo muestro las personas que estan en la misma room
          */
         let people_byRoom = users.getPeopleByRoom(data.room);
+        client.broadcast.to(data.room).emit('send_message', createMessage('admin', `the user ${data.name} joins to the chat`));
         client.broadcast.to(data.room).emit('get_people', people_byRoom);
         callback(people_byRoom);
     });
-    client.on('send_message', (data) => {
+    client.on('send_message', (data, callback) => {
         let person = users.search_person_ById(client.id);
         client.broadcast.to(person.room).emit('send_message', createMessage(person.name, data.message));
+        callback(data);
     })
     client.on('disconnect', () => {
         let delete_user = users.close_session_personById(client.id);

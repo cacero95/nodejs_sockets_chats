@@ -19,14 +19,20 @@ socket.on('connect', function() {
         render_people(resp);
     })
 })
+
+
+// evento para identificar cuando un usuario send a message
 socket.on('send_message', function(message) {
-    console.log(message);
+    render_message(message);
+    scrollBottom();
 });
 
 // evento para estar pendiente cuando un usuario entra o sale del chat
 socket.on('get_people', function(users) {
-    console.log(users);
+    render_people(users);
 })
+
+// manda un mensaje privado a someone in the room
 socket.on('private_message', function(message) {
     console.log('Private message', message)
 })
